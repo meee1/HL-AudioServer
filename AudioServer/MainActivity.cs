@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Android;
 using Android.App;
 using Android.Content;
@@ -28,8 +27,8 @@ namespace AudioServer
             var status = await Permissions.CheckStatusAsync<AudioPermission>();
             if (status != PermissionStatus.Granted)
                 await Permissions.RequestAsync<AudioPermission>();
-                    
 
+            
             var serviceToStart = new Intent(this, typeof(AudioService));
 
             StartService(serviceToStart);
@@ -42,12 +41,4 @@ namespace AudioServer
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 	}
-
-    public class AudioPermission : Xamarin.Essentials.Permissions.BasePlatformPermission
-    {
-        public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)>
-        {
-            (Android.Manifest.Permission.RecordAudio, true)
-        }.ToArray();
-    }
 }

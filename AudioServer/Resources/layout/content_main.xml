@@ -11,6 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Audio Server" />
-
+        android:text="Audio Server" android:id="@+id/textView1" />
+    <CheckBox
+        android:layout_width="174.0dp"
+        android:layout_height="47.0dp"
+        android:layout_centerInParent="true"
+      android:id="@+id/checkBox1" android:onClick="onclick"/>
+    
 </RelativeLayout>
