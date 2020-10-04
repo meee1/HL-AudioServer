@@ -26,6 +26,9 @@ namespace AudioServer
             SetContentView(Resource.Layout.activity_main);
 
             var status = await Permissions.CheckStatusAsync<AudioPermission>();
+            if (status != PermissionStatus.Granted)
+                await Permissions.RequestAsync<AudioPermission>();
+                    
 
             var serviceToStart = new Intent(this, typeof(AudioService));
 
