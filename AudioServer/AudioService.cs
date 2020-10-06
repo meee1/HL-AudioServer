@@ -11,7 +11,8 @@ namespace AudioServer
     [Service]
     public class AudioService : Service
     {
-        private bool running = false;
+        public static bool running = false;
+        public static string ip = "192.168.0.10";
 
         public override StartCommandResult OnStartCommand(Intent? intent, StartCommandFlags flags, int startId)
         {
@@ -21,7 +22,7 @@ namespace AudioServer
             new Thread(() =>
             {
 
-                var endpoint = new IPEndPoint(IPAddress.Parse("10.1.1.26"), 5060);
+                var endpoint = new IPEndPoint(IPAddress.Parse(ip), 5060);
                 var listener = new UdpClient(5060);
 
                 // Get buffer size
@@ -65,9 +66,18 @@ namespace AudioServer
                         audio.Write(data, 0, data.Length);
                     }
                 }
+
+                audioin.Stop();
+                audio.Stop();
             }).Start();
 
             return StartCommandResult.Sticky;
+        }
+
+        public override bool StopService(Intent? name)
+        {
+            running = false;
+            return base.StopService(name);
         }
 
         public override void OnDestroy()

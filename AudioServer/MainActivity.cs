@@ -28,10 +28,28 @@ namespace AudioServer
             if (status != PermissionStatus.Granted)
                 await Permissions.RequestAsync<AudioPermission>();
 
-            
+            CheckBox chk = FindViewById<CheckBox>(Resource.Id.checkBox1);
+            chk.Checked = AudioServer.AudioService.running;
+            var edittext = FindViewById<EditText>(Resource.Id.editText1);
+
+
+            chk.CheckedChange += Chk_CheckedChange;
+        }
+
+        private void Chk_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
             var serviceToStart = new Intent(this, typeof(AudioService));
 
-            StartService(serviceToStart);
+            var edittext = FindViewById<EditText>(Resource.Id.editText1);
+            AudioServer.AudioService.ip = edittext.Text;
+            if (e.IsChecked)
+            {
+                StartService(serviceToStart);
+            }
+            else
+            {
+                StopService(serviceToStart);
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
