@@ -49,7 +49,7 @@ namespace AudioServer
 
                 //codec.Start();
 
-                var frames = new byte[20 * 16];
+                var frames = new byte[(int) (SampleRate * 0.01 * 16)];
                 running = true;
                 while (running)
                 {
